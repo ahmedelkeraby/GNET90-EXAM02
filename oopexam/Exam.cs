@@ -1,4 +1,4 @@
-﻿using ExaminationSystem.Models;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,33 +10,36 @@ namespace oopexam
 {
     public abstract class Exam : ICloneable
     {
-        public int TimeOfExam { get; set; }          // in minutes
+        public int TimeInMinutes { get; set; }
         public int NumberOfQuestions { get; set; }
-        public List<Question> Questions { get; set; }
+        public Question[] Questions { get; set; }
 
-        // "Every Exam object is associated to a Subject."
-        public Subject Subject { get; set; }
-
-        protected Exam(int timeOfExam, List<Question> questions, Subject subject)
+        protected Exam(int timeInMinutes, int numberOfQuestions)
         {
-            TimeOfExam = timeOfExam;
-            Questions = questions;
-            NumberOfQuestions = questions.Count;
-            Subject = subject;
+            TimeInMinutes = timeInMinutes;
+            NumberOfQuestions = numberOfQuestions;
+            Questions = new Question[numberOfQuestions];
         }
 
-        /// <summary>
-        /// Implementation differs per exam type (Final vs Practical), so it is abstract here.
-        /// </summary>
         public abstract void ShowExam();
 
-        public abstract object Clone();
+        public virtual object Clone()
+        {
+            Exam cloned = (Exam)this.MemberwiseClone();
+            if (this.Questions != null)
+            {
+                cloned.Questions = new Question[this.Questions.Length];
+                for (int i = 0; i < this.Questions.Length; i++)
+                {
+                    cloned.Questions[i] = (Question)this.Questions[i].Clone();
+                }
+            }
+            return cloned;
+        }
 
         public override string ToString()
         {
-            return $"Exam for '{Subject.SubjectName}' - Duration: {TimeOfExam} min, " +
-                   $"Questions: {NumberOfQuestions}";
+            return $"Exam Time: {TimeInMinutes} mins, Questions: {NumberOfQuestions}";
         }
     }
 }
-

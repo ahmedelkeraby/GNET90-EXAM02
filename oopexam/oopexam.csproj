@@ -44,10 +44,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Answer.cs" />
+    <Compile Include="Enums.cs" />
     <Compile Include="Exam.cs" />
+    <Compile Include="Finalexam.cs" />
+    <Compile Include="Mcqquestion.cs" />
+    <Compile Include="Practicalexam.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Question.cs" />
+    <Compile Include="Subject.cs" />
     <Compile Include="Truefalsequestion.cs" />
   </ItemGroup>
   <ItemGroup>

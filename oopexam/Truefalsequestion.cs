@@ -11,38 +11,18 @@ namespace oopexam
 
     public class TrueFalseQuestion : Question
     {
-        public TrueFalseQuestion(string header, string body, double mark, Answer rightAnswer)
-            // Constructor chaining: builds the fixed True/False answer list once,
-            // then hands everything up to the base Question constructor.
-            : base(header, body, mark, new Answer[]
-  {
-      new Answer(1, "True"),
-      new Answer(2, "False")
-  }, rightAnswer)
+        public TrueFalseQuestion(string body, double mark, int rightAnswerId)
+            : base("True / False Question", body, mark, 2)
         {
+            AnswerList[0] = new Answer(1, "True");
+            AnswerList[1] = new Answer(2, "False");
+            RightAnswerId = rightAnswerId;
         }
 
         public override void DisplayQuestion()
         {
-            Console.WriteLine($"Q: {Body}  ({Mark} mark(s))");
-            foreach (var answer in AnswerList)
-            {
-                Console.WriteLine($"{answer}");
-            }
-        }
-
-        public override object Clone()
-        {
-            var clonedRightAnswer = (Answer)RightAnswer.Clone();
-            return new TrueFalseQuestion(Header, Body, Mark, clonedRightAnswer);
-        }
-
-        public override string ToString()
-        {
-            return base.ToString() + " [True/False]";
+            Console.WriteLine($"{Header}\n{Body}");
+            Console.WriteLine("1. True\t\t2. False");
         }
     }
 }
-
-}
-
